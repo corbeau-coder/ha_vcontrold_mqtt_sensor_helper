@@ -1,0 +1,3 @@
+- [ ] read vito.xml for getting all sensors and values. probably identify by command bytes, not the name due to localization dependency
+- [ ] create templates for according yaml-configs -> jinja2 maybe?
+- [ ] determine how to save it
