@@ -13,18 +13,15 @@ def xml_element(request):
     data = request.param
 
     element = ET.Element('command')
-    name_element = ET.SubElement(element, "name")
-    name_element.text = data['name']
-    ut_element = ET.SubElement(element, "unit")
-    ut_element.text = data['unittype']
-    desc_element = ET.SubElement(element, "description")
-    desc_element.text = data['desc']
+    ET.SubElement(element, "name").text = data['name']
+    ET.SubElement(element, "unit").text = data['unittype']
+    ET.SubElement(element, "description").text = data['desc']
 
     return element
 
 
-
-@pytest.mark.parametrize("xml_element, data", test_data, test_data, indirect=True)
+data = [(data, data) for data in test_data]
+@pytest.mark.parametrize("xml_element, data", data, indirect=["xml_element"])
 def test_class_CommandElement(xml_element: ET.Element, data):
     cot = CommandElement(xml_element)
     assert(cot.name == data['name'])
