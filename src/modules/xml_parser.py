@@ -6,7 +6,13 @@ from loguru import logger
 #find all commands
 
 class CommandElement(BaseModel):
-    def __init__(self, element: ET.Element):
-        self.name = element.get("name")
-        self.unittype = element.find('unit').text
-        self.desc = element.find('description').text
+    name: str
+    unittype: str
+    desc: str
+
+    @classmethod
+    def fill_from_xml(cls, element: ET.Element):
+        return cls(
+            name = element.get("name"),
+            unittype = element.find('unit').text,
+            desc = element.find('description').text)

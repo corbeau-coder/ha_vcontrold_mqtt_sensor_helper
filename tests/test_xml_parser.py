@@ -22,7 +22,7 @@ def xml_element(request):
 expected_data = [(data, data) for data in test_data]
 @pytest.mark.parametrize("xml_element, expected_data", expected_data, indirect=["xml_element"])
 def test_class_CommandElement(xml_element: ET.Element, expected_data):
-    cot = CommandElement(xml_element)
+    cot = CommandElement.fill_from_xml(xml_element)
     assert(cot.name == expected_data['name'])
     assert(cot.unittype == expected_data['unittype'])
     assert(cot.desc == expected_data['desc'])
