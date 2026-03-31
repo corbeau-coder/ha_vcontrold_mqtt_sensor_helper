@@ -1,3 +1,11 @@
 - [ ] read vito.xml for getting all sensors and values. probably identify by command bytes, not the name due to localization dependency
+- [ ] check unit-field of vito.xml commands
+- [ ] collect types of sensors
+ - Temp sensor
+ - boolean sensors (things on/off)
+ - switches
+ - hours/values (runtime, starts of burner)
+ - volume flow
 - [ ] create templates for according yaml-configs -> jinja2 maybe?
 - [ ] determine how to save it
+- [ ] Zusatzfeature: Lösche alle Devicespezifika aus ner xml
