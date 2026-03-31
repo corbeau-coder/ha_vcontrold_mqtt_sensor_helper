@@ -16,3 +16,23 @@ class CommandElement(BaseModel):
             name = element.get("name"),
             unittype = element.find('unit').text,
             desc = element.find('description').text)
+    
+class TreeElement(BaseModel):
+    model_config = {"arbitrary_types_allowed": True}
+    path: str
+    root_elem: ET.Element
+    cmd_list: list[CommandElement] = []
+
+    @classmethod
+    def fetch_data(cls, path):
+        cmd_list: list[CommandElement] = []
+        try:
+            root_elem = ET.parse(path).getroot()
+        except (FileNotFoundError, ET.ParseError) as e:
+            logger.error(f"Error parsing xml file {path} - Exception {str(e)}")
+            raise e
+        for item in root_elem.iterfind('command'):
+            cmd_list.append(CommandElement.fill_from_xml(item))
+        return cls(path = path,
+                   root_elem = root_elem,
+                   cmd_list = cmd_list)
