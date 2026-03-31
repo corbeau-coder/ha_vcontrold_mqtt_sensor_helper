@@ -1,4 +1,4 @@
-from modules.xml_parser import CommandElement
+from src.modules.xml_parser import CommandElement
 import xml.etree.ElementTree as ET
 import pytest
 
@@ -12,7 +12,7 @@ test_data = [
 def xml_element(request):
     data = request.param
 
-    element = ET.Element('command', name=data['name'])
+    element = ET.Element('command', {'name':data['name']})
     ET.SubElement(element, "unit").text = data['unittype']
     ET.SubElement(element, "description").text = data['desc']
 
