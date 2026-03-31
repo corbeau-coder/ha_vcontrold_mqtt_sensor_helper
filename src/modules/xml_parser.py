@@ -6,4 +6,6 @@ import xml.etree.ElementTree as ET
 
 class CommandElement(BaseModel):
     def __init__(self, element: ET.Element):
-        self.name = element.find()
+        self.name = element.attrib['name']
+        self.unittype = element.find('unit').text
+        self.desc = element.find('description').text
