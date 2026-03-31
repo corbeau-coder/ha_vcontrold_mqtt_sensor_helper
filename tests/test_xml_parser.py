@@ -3,9 +3,17 @@ import xml.etree.ElementTree as ET
 import pytest
 
 test_data = [
-    {"name": "asd", "unittype": "DASDAS", "desc": "asdasd"},
-    {"name": "asd", "unittype": "DASDAS", "desc": "asdasd"},
-    {"name": "asd", "unittype": "DASDAS", "desc": "asdasd"}
+    {"name": "test_ele_0", "unittype": "UT", "desc": "test type UT"},
+    {"name": "test_ele_1", "unittype": "PR", "desc": "test type PR"},
+    {"name": "test_ele_2", "unittype": "ST", "desc": "test type ST"},
+    {"name": "test_ele_3", "unittype": "CO", "desc": "test type CO"},
+    {"name": "test_ele_4", "unittype": "CS", "desc": "test type CS"},
+    {"name": "test_ele_5", "unittype": "CT", "desc": "test type CT"},
+    {"name": "test_ele_6", "unittype": "BA", "desc": "test type BA"},
+    {"name": "test_ele_7", "unittype": "SR", "desc": "test type SR"},
+    {"name": "test_ele_8", "unittype": "TI", "desc": "test type TI"},
+    {"name": "test_ele_9", "unittype": "ES", "desc": "test type ES"},
+    {"name": "test_ele_10", "unittype": "RT", "desc": "test type RT"}
 ]
 
 @pytest.fixture
