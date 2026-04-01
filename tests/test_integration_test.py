@@ -18,7 +18,7 @@ def fake_exit(code):
     (["yaml_mqtt_vcontrold_helper.py", "-c" ,"-v", "-d"], 0, ["verbose output enabled", "done. Created configuration.yaml sucessfully", "done. Removed all device elements in vito.xml"]),
     (["yaml_mqtt_vcontrold_helper.py", "-d" , "-c"], 0, ["done. Created configuration.yaml sucessfully", "done. Removed all device elements in vito.xml"]),
 ])
-def test_argumented_flow(monkeypatch, arguments, exit_code, expected_outcome):
+def test_argumented_flow_good(monkeypatch, arguments, exit_code, expected_outcome):
     with (patch("src.yaml_mqtt_vcontrold_helper.logger") as logger_mock):
         monkeypatch.setattr("sys.argv", arguments)
         monkeypatch.setattr("sys.exit", fake_exit)
