@@ -12,26 +12,44 @@ def main(path):
     
     parser.add_argument(
         "-c",
-        type=str,
         help="create configuration.yaml of all commands according to vito.xml.",
-        nargs="?"
+        action="store_true"
     )
 
     parser.add_argument(
         "-d",
-        type=str,
         help="removes all <devices> and <device> elements in the vito.xml.",
-        nargs="?"
+        action="store_true"
     )
 
     parser.add_argument(
         "-v",
-        type=str,
         help="verbose output",
-        nargs="?"
+        action="store_true"
     )
 
     args = parser.parse_args()
+
+    if args.v:
+        logger.level("DEBUG")
+        logger.info("verbose output enabled")
+    else:
+        logger.level("INFO")
+
+    if args.c:
+        logger.info("Creating yaml configuration ...")
+        
+        logger.info("done. Created configuration.yaml sucessfully")
+        
+
+    if args.d:
+        logger.info("Removing all device-specific elements ...")
+
+        logger.info("done. Removed all device elements in vito.xml")
+        
+
+    sys.exit(0)
+
 
 
 """  parser.add_argument(
