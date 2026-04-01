@@ -46,3 +46,13 @@ class TreeElement(BaseModel):
         return cls(path = path,
                    root_elem = root_elem,
                    cmd_list = cmd_list)
+    
+    def remove_dev_refs(self):
+        devices = self.root_elem.find('devices')
+        if devices is not None:
+            self.root_elem.remove(devices)
+
+        for parent in self.root_elem.iter():
+            for child in list(parent):
+                if child.tag == 'device':
+                    parent.remove(child)

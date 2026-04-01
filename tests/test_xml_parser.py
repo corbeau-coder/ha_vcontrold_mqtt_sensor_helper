@@ -83,7 +83,7 @@ def test_class_TreeElement_fetch_data_good_path(expected_data, fake_loader: Fake
 
 test_xml_string_devices_good = [
     {"xml_string": "<?xml version=\"1.0\"?><vito><devices><device ID=\"2098\"/><device ID=\"2053\"/></devices><commands><command name=\"getTempA\"><addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description><device ID=\"2053\"><addr>6F</addr><unit>UT1</unit><len>1</len></device></command><command name=\"getTempAtp\"><addr>5525</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C (Tiefpass)</description><device ID=\"2053\"/></command></commands></vito>",
-     "expected_data": "<?xml version=\"1.0\"?><vito><commands><command name=\"getTempA\"><addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description></command><command name=\"getTempAtp\"><addr>5525</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C (Tiefpass)</description></command></commands></vito>"},
+     "expected_data": "<vito><commands><command name=\"getTempA\"><addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description></command><command name=\"getTempAtp\"><addr>5525</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C (Tiefpass)</description></command></commands></vito>"},
 ]
 
 expected_data = [(data['expected_data'], data) for data in test_xml_string_devices_good]
@@ -92,4 +92,4 @@ def test_class_TreeElement_remove_device_references(expected_string: str, fake_l
     path = ""
     cut = TreeElement.fetch_data(path, fake_loader)
     cut.remove_dev_refs()
-    assert ET.tostring(cut.root_elem, encoding='utf8', method='xml') == expected_string
+    assert ET.tostring(cut.root_elem, encoding='unicode', method='xml') == expected_string
