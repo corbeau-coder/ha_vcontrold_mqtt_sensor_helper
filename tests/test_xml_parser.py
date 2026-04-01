@@ -100,12 +100,12 @@ def path_loader(request, tmp_path):
 @pytest.mark.parametrize("path_loader", test_xml_string_devices_bad, indirect=["path_loader"])
 def test_class_FileXmlLoader_bad_content(path_loader):
     with (pytest.raises(ET.ParseError) as exc):    
-        cut = FileXmlLoader().load(path_loader)
+        FileXmlLoader().load(path_loader)
     assert exc.type is ET.ParseError
 
 def test_class_FileXmlLoader_bad_path():
     with (pytest.raises(FileNotFoundError) as exc):
-        cut = FileXmlLoader().load("")
+        FileXmlLoader().load("")
     assert exc.type is FileNotFoundError
 
 
