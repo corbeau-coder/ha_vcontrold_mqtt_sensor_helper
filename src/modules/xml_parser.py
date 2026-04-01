@@ -3,8 +3,9 @@ import xml.etree.ElementTree as ET
 from loguru import logger
 from abc import ABC, abstractmethod
 
-#parse tree
-#find all commands
+# parse tree
+# find all commands
+
 
 class CommandElement(BaseModel):
     name: str
@@ -14,18 +15,32 @@ class CommandElement(BaseModel):
     @classmethod
     def fill_from_xml(cls, element: ET.Element):
         return cls(
-            name = element.get("name"),
-            unittype = element.find('unit').text,
-            desc = element.find('description').text)
+            name=element.get("name"),
+            unittype=element.find("unit").text,
+            desc=element.find("description").text,
+        )
 
 
 class XmlLoader(ABC):
     @abstractmethod
     def load(self, path: str) -> ET.Element: ...
 
+
 class FileXmlLoader(XmlLoader):
     def load(self, path: str) -> ET.Element:
         return ET.parse(path).getroot()
+
+
+class XmlStorer(ABC):
+    @abstractmethod
+    def store(self, path: str, xml_elem: ET.Element): ...
+
+
+class FileXmlStorer(XmlStorer):
+    def store(self, path, xml_elem):
+        tree = ET.ElementTree(xml_elem)
+        tree.write(path)
+        return
 
 
 class TreeElement(BaseModel):
@@ -42,17 +57,21 @@ class TreeElement(BaseModel):
         except (FileNotFoundError, ET.ParseError) as e:
             logger.error(f"Error parsing xml file {path} - Exception {str(e)}")
             raise
-        cmd_list = [CommandElement.fill_from_xml(item) for item in root_elem.iterfind('commands/command')]
-        return cls(path = path,
-                   root_elem = root_elem,
-                   cmd_list = cmd_list)
-    
+        cmd_list = [
+            CommandElement.fill_from_xml(item)
+            for item in root_elem.iterfind("commands/command")
+        ]
+        return cls(path=path, root_elem=root_elem, cmd_list=cmd_list)
+
     def remove_dev_refs(self):
-        devices = self.root_elem.find('devices')
+        devices = self.root_elem.find("devices")
         if devices is not None:
             self.root_elem.remove(devices)
 
         for parent in self.root_elem.iter():
             for child in list(parent):
-                if child.tag == 'device':
+                if child.tag == "device":
                     parent.remove(child)
+
+    def write_xml_file(self, path: str, storer: XmlStorer = FileXmlStorer()):
+        storer.store(path, self.root_elem)

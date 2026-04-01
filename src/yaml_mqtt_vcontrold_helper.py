@@ -1,6 +1,7 @@
 import argparse
 from loguru import logger
 import sys
+from src.modules.xml_parser import TreeElement
 
 def main(path):
     #switch case argparse
@@ -38,12 +39,17 @@ def main(path):
 
     if args.c:
         logger.info("Creating yaml configuration ...")
-        
+
         logger.info("done. Created configuration.yaml sucessfully")
         
 
     if args.d:
         logger.info("Removing all device-specific elements ...")
+
+        root_elem = TreeElement.fetch_data(path)
+        root_elem.remove_dev_refs()
+        root_elem.write_xml_file(path)
+
 
         logger.info("done. Removed all device elements in vito.xml")
         
