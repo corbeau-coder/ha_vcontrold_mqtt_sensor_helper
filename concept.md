@@ -1,6 +1,8 @@
 - [x] read vito.xml for getting all sensors and values. ~~probably identify by command bytes, not the name due to localization dependency~~
 - [x] check unit-field of vito.xml commands
 - [x] program flow controlw
+- [ ] logging
+- [ ] exception handling
 - [ ] collect types of sensors
  - Temp sensor
  - boolean sensors (things on/off)
