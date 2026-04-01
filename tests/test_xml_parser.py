@@ -1,4 +1,4 @@
-from src.modules.xml_parser import CommandElement
+from src.modules.xml_parser import CommandElement, TreeElement, XmlLoader
 import xml.etree.ElementTree as ET
 import pytest
 from pydantic import ValidationError
@@ -39,10 +39,10 @@ def xml_element(request):
 expected_data = [(data, data) for data in test_data_good]
 @pytest.mark.parametrize("xml_element, expected_data", expected_data, indirect=["xml_element"])
 def test_class_CommandElement_good_path(xml_element: ET.Element, expected_data):
-    cot = CommandElement.fill_from_xml(xml_element)
-    assert(cot.name == expected_data['name'])
-    assert(cot.unittype == expected_data['unittype'])
-    assert(cot.desc == expected_data['desc'])
+    cut = CommandElement.fill_from_xml(xml_element)
+    assert(cut.name == expected_data['name'])
+    assert(cut.unittype == expected_data['unittype'])
+    assert(cut.desc == expected_data['desc'])
 
 
 expected_data = [(data, data) for data in test_data_bad]
@@ -51,3 +51,45 @@ def test_class_CommandElement_bad_path(xml_element: ET.Element, expected_data):
     with (pytest.raises(ValidationError) as exc):
        CommandElement.fill_from_xml(xml_element)
     assert exc.type is ValidationError
+
+
+class FakeXmlLoader(XmlLoader):
+    def __init__(self, xml_string: str):
+        self.root = ET.fromstring(xml_string)
+    def load(self, path: str) -> ET.Element:
+        return self.root
+
+@pytest.fixture
+def fake_loader(request):
+    data = request.param
+    return FakeXmlLoader(data['xml_string'])
+
+test_xml_string_good = [
+    {"xml_string": "<?xml version=\"1.0\"?><vito><devices><device ID=\"2098\"/><device ID=\"2053\"/></devices><commands><command name=\"getTempA\"><addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description><device ID=\"2053\"><addr>6F</addr><unit>UT1</unit><len>1</len></device></command><command name=\"getTempAtp\"><addr>5525</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C (Tiefpass)</description><device ID=\"2053\"/></command></commands></vito>",
+     "expected_data": [{"name": "getTempA", "unittype": "UT", "desc": "Ermittle die Aussentemperatur in Grad C"},
+                       {"name": "getTempAtp", "unittype": "UT", "desc": "Ermittle die Aussentemperatur in Grad C (Tiefpass)"}]},
+]
+
+expected_data = [(data['expected_data'],data) for data in test_xml_string_good]
+@pytest.mark.parametrize("expected_data, fake_loader", expected_data, indirect=["fake_loader"])
+def test_class_TreeElement_fetch_data_good_path(expected_data, fake_loader: FakeXmlLoader):
+    path = ""
+    cut = TreeElement.fetch_data(path, fake_loader)
+    for i, item in enumerate(cut.cmd_list):
+        assert item.name == expected_data[i]['name']
+        assert item.unittype == expected_data[i]['unittype']
+        assert item.desc == expected_data[i]['desc']
+
+
+test_xml_string_devices_good = [
+    {"xml_string": "<?xml version=\"1.0\"?><vito><devices><device ID=\"2098\"/><device ID=\"2053\"/></devices><commands><command name=\"getTempA\"><addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description><device ID=\"2053\"><addr>6F</addr><unit>UT1</unit><len>1</len></device></command><command name=\"getTempAtp\"><addr>5525</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C (Tiefpass)</description><device ID=\"2053\"/></command></commands></vito>",
+     "expected_data": "<?xml version=\"1.0\"?><vito><commands><command name=\"getTempA\"><addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description></command><command name=\"getTempAtp\"><addr>5525</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C (Tiefpass)</description></command></commands></vito>"},
+]
+
+expected_data = [(data['expected_data'], data) for data in test_xml_string_devices_good]
+@pytest.mark.parametrize("expected_string, fake_loader", expected_data, indirect=["fake_loader"])
+def test_class_TreeElement_remove_device_references(expected_string: str, fake_loader: FakeXmlLoader):
+    path = ""
+    cut = TreeElement.fetch_data(path, fake_loader)
+    cut.remove_dev_refs()
+    assert ET.tostring(cut.root_elem, encoding='utf8', method='xml') == expected_string

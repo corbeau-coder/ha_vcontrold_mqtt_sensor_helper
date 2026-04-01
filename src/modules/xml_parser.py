@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 import xml.etree.ElementTree as ET
 from loguru import logger
+from abc import ABC, abstractmethod
 
 #parse tree
 #find all commands
@@ -16,7 +17,17 @@ class CommandElement(BaseModel):
             name = element.get("name"),
             unittype = element.find('unit').text,
             desc = element.find('description').text)
-    
+
+
+class XmlLoader(ABC):
+    @abstractmethod
+    def load(self, path: str) -> ET.Element: ...
+
+class FileXmlLoader(XmlLoader):
+    def load(self, path: str) -> ET.Element:
+        return ET.parse(path).getroot()
+
+
 class TreeElement(BaseModel):
     model_config = {"arbitrary_types_allowed": True}
     path: str
@@ -24,15 +35,14 @@ class TreeElement(BaseModel):
     cmd_list: list[CommandElement] = []
 
     @classmethod
-    def fetch_data(cls, path):
+    def fetch_data(cls, path: str, loader: XmlLoader = FileXmlLoader()):
         cmd_list: list[CommandElement] = []
         try:
-            root_elem = ET.parse(path).getroot()
+            root_elem = loader.load(path)
         except (FileNotFoundError, ET.ParseError) as e:
             logger.error(f"Error parsing xml file {path} - Exception {str(e)}")
-            raise e
-        for item in root_elem.iterfind('command'):
-            cmd_list.append(CommandElement.fill_from_xml(item))
+            raise
+        cmd_list = [CommandElement.fill_from_xml(item) for item in root_elem.iterfind('commands/command')]
         return cls(path = path,
                    root_elem = root_elem,
                    cmd_list = cmd_list)
