@@ -13,6 +13,18 @@ files = [
 ]
 
 [[package]]
+name = "argparse"
+version = "1.4.0"
+description = "Python command-line parsing library"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "argparse-1.4.0-py2.py3-none-any.whl", hash = "sha256:c31647edb69fd3d465a847ea3157d37bed1f95f19760b11a47aa91c04b666314"},
+    {file = "argparse-1.4.0.tar.gz", hash = "sha256:62b089a55be1d8949cd2bc7e0df0bddb9e028faefc8c32038cc84862aefdd6e4"},
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -66,18 +78,6 @@ groups = ["main"]
 files = [
     {file = "packaging-26.0-py3-none-any.whl", hash = "sha256:b36f1fef9334a5588b4166f8bcd26a14e521f2b55e6b9de3aaa80d3ff7a37529"},
     {file = "packaging-26.0.tar.gz", hash = "sha256:00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"},
-]
-
-[[package]]
-name = "parseargs"
-version = "0.0.5"
-description = "A simple package for parsing function arguments from the command line"
-optional = false
-python-versions = ">=3.6"
-groups = ["main"]
-files = [
-    {file = "parseargs-0.0.5-py3-none-any.whl", hash = "sha256:b1a307f0ebf394450643357691a61dc59989dffb5917d5147d97fa50d5cf2104"},
-    {file = "parseargs-0.0.5.tar.gz", hash = "sha256:c2b21f09b1fa766dc84ac62496ab4478857322b6d3019148ff9b9ae7f776c950"},
 ]
 
 [[package]]
@@ -335,4 +335,4 @@ dev = ["black (>=19.3b0) ; python_version >= \"3.6\"", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14,<4.0"
-content-hash = "bc46fc47b61b0d719fe31e80d40a2dafcaeeb789b344240e7558f6b5386b7121"
+content-hash = "b658a46e05531e62aa21769bcbb544708a8ee59514b5be1f4499a8d9e97f3518"
