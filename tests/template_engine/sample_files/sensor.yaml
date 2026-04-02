@@ -1,6 +1,6 @@
 sensor:
   - name: "TestsensorTemp1"
-    unique_id: "TestsensorTemp1"
+    unique_id: "viesscontrold_TestsensorTemp1"
     device_class: temperature
     state_topic: "openv/TestsensorTemp1"
     unit_of_measurement: "°C"

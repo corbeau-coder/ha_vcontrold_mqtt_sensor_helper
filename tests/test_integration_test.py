@@ -11,7 +11,6 @@ from yaml import safe_load
 def fake_exit(code):
     raise SystemExit(code)
 
-1
 test_xml_file_strings = {
     "vito_before":"<vito><devices><device/><device id=\"1337\"><unit>UT</unit></device></devices>"
                   "<commands><command name=\"getTempA\"><unit>UT</unit><description>get Temp A</description></command>"
@@ -75,12 +74,11 @@ def return_sample_data(filename: str) -> object:
 
 test_data = {(data["xml_string"], data["sample_file_name"]) for data in test_xml_string_template_good}
 @pytest.mark.parametrize("input_xml, output_yaml", test_data)
+@pytest.mark.skip(reason="not yet implemented")
 def test_yaml_creation(input_xml, output_yaml):
     #main(input_xml) mock den inputzugriff in main, vermutlich xml_parser.CommandElement.fetch_data sowie TreeElement.fill_from_xml
     #assert output_yaml mit dem geschriebenen output aus template_engine.write_output_to_file()
-    
     pass
-
 
 #verbose
 #invalid/empty - übersicht

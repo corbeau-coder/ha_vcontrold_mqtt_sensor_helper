@@ -39,7 +39,7 @@ class XmlStorer(ABC):
 class FileXmlStorer(XmlStorer):
     def store(self, path, xml_elem):
         tree = ET.ElementTree(xml_elem)
-        tree.write(path)
+        tree.write(path, encoding="utf-8")
         return
 
 
@@ -51,7 +51,6 @@ class TreeElement(BaseModel):
 
     @classmethod
     def fetch_data(cls, path: str, loader: XmlLoader = FileXmlLoader()):
-        cmd_list: list[CommandElement] = []
         try:
             root_elem = loader.load(path)
         except (FileNotFoundError, ET.ParseError) as e:

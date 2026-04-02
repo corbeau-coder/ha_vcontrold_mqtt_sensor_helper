@@ -1,4 +1,4 @@
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 from src.modules.xml_parser.xml_parser import CommandElement
 from pathlib import Path
 
@@ -11,5 +11,5 @@ class YamlRenderer():
         output_template = env.get_template(p.name)
         return output_template.render(sensor_list=list_cmdelem)
     
-    def write_yaml_file(yaml_file: str="configuration.yaml"):
+    def write_yaml_file(self, yaml_file: str="configuration.yaml"):
         pass

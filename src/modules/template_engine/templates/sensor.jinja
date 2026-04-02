@@ -1,7 +1,7 @@
 sensor:
   {% for data in sensor_list %}
   - name: "{{ data.name }}"
-    unique_id: "{{ data.name }}"
+    unique_id: "viesscontrold_{{ data.name }}"
     device_class: temperature
     state_topic: "openv/{{ data.name }}"
     unit_of_measurement: "°C"

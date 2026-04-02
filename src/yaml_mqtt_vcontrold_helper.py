@@ -32,10 +32,12 @@ def main(path):
     args = parser.parse_args()
 
     if args.v:
-        logger.level("DEBUG")
+        logger.remove()
+        logger.add(sys.stderr, level="DEBUG")
         logger.info("verbose output enabled")
     else:
-        logger.level("INFO")
+        logger.remove()
+        logger.add(sys.stderr, level="INFO")
 
     if args.c:
         logger.info("Creating yaml configuration ...")
