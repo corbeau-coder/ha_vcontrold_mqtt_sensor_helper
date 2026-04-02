@@ -1,0 +1,11 @@
+sensor:
+  - name: "TestsensorTemp1"
+    unique_id: "TestsensorTemp1"
+    device_class: temperature
+    static_topic: "openv/TestsensorTemp1"
+    unit_of_measurement: "°C"
+    valut_template: |-
+      {{ value | round(2) }}
+    device:
+      identifiers: viesscontrold
+      manufacturer: viessmann
