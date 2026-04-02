@@ -1,4 +1,4 @@
-draft from https://github.com/Alexandre-io/homeassistant-vcontrol/blob/main/vcontrold/DOCS.md
+"""draft from https://github.com/Alexandre-io/homeassistant-vcontrol/blob/main/vcontrold/DOCS.md
 
 mqtt:
   binary_sensor:
@@ -35,4 +35,31 @@ mqtt:
       payload_on: 1
       payload_off: 0
       state_on: 1
-      state_off: 0
+      state_off: 0"""
+
+"""sensor:
+  - name: "Aussentemperatur"
+    unique_id: "testsensor1"
+    device_class: temperature
+    state_topic: "openv/getTempA"
+    unit_of_measurement: "°C"
+    value_template: |-
+      {{ value | round(2) }}
+    device:
+      identifiers: testcontrold
+      manufacturer: testmann
+
+  - name: "Aussentemperatur tp"
+    unique_id: "testsensor2"
+    device_class: temperature
+    state_topic: "openv/getTempAtp"
+    unit_of_measurement: "°C"
+    value_template: |-
+      {{ value | round(2) }}
+    device:
+      identifiers: testcontrold
+      manufacturer: testmann
+
+      model: 150KB"""
+
+
