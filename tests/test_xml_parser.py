@@ -1,4 +1,4 @@
-from src.modules.xml_parser import CommandElement, TreeElement, XmlLoader, FileXmlLoader
+from src.modules.xml_parser.xml_parser import CommandElement, TreeElement, XmlLoader, FileXmlLoader
 import xml.etree.ElementTree as ET
 import pytest
 from pydantic import ValidationError

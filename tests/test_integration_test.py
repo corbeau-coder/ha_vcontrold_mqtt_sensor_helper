@@ -9,7 +9,7 @@ from src.yaml_mqtt_vcontrold_helper import main
 def fake_exit(code):
     raise SystemExit(code)
 
-
+1
 test_xml_file_strings = {
     "vito_before":"<vito><devices><device/><device id=\"1337\"><unit>UT</unit></device></devices>"
                   "<commands><command name=\"getTempA\"><unit>UT</unit><description>get Temp A</description></command>"
@@ -25,9 +25,9 @@ def mock_xml_file():
     mock_tree.getroot.return_value = ET.fromstring(test_xml_file_strings["vito_before"])
     mock_storer = MagicMock()
 
-    with (patch("src.modules.xml_parser.ET.parse", return_value=mock_tree),
+    with (patch("src.modules.xml_parser.xml_parser.ET.parse", return_value=mock_tree),
           patch("builtins.open", mock_open(read_data=test_xml_file_strings["vito_before"])),
-          patch("src.modules.xml_parser.FileXmlStorer.store", mock_storer)):
+          patch("src.modules.xml_parser.xml_parser.FileXmlStorer.store", mock_storer)):
         yield "fake/path.xml", mock_storer
 
 @pytest.mark.parametrize("arguments, exit_code, expected_outcome", [

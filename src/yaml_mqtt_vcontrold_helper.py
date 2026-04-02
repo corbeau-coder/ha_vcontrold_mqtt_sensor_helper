@@ -1,7 +1,7 @@
 import argparse
 from loguru import logger
 import sys
-from src.modules.xml_parser import TreeElement
+from src.modules.xml_parser.xml_parser import TreeElement
 
 def main(path):
     #switch case argparse
