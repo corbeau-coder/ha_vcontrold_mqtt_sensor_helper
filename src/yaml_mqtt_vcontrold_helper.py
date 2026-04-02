@@ -2,6 +2,7 @@ import argparse
 from loguru import logger
 import sys
 from src.modules.xml_parser.xml_parser import TreeElement
+from src.modules.template_engine.template_engine import YamlRenderer
 
 def main(path):
     #switch case argparse
@@ -41,7 +42,10 @@ def main(path):
 
     if args.c:
         logger.info("Creating yaml configuration ...")
-
+        root_elem = TreeElement.fetch_data(path)
+        #business logic deviding cmds into groups for sensors and other templates
+        
+        
         logger.info("done. Created configuration.yaml sucessfully")
         
 
@@ -59,28 +63,6 @@ def main(path):
     sys.exit(0)
 
 
-
-"""  parser.add_argument(
-        "-i",
-        type=str,
-        help="input path used for vito.xml, if empty, vito.xml in actual directory will be used",
-        default="vito.xml"
-    )
-
-    parser.add_argument(
-        "-o",
-        type=str,
-        help="output path where yaml content should be written to - has to be a file, not a directory. actual directory with filename configuration.yaml will be used by default",
-        default="configuration.yaml"
-    )
-"""
-
-    
-
-
-
-    #parse tree #xml
-    #extrude items into models #jinja2
     #write configuration.yaml
     
 
