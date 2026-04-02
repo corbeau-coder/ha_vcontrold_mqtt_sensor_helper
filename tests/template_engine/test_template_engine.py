@@ -1,11 +1,21 @@
+import pytest
+from unittest.mock import mock_open
+
+import xml.etree.ElementTree as ET
+from yaml import safe_load
 
 
-test_xml_string_template_good = {
-    "xml_string": "<?xml version=\"1.0\"?><vito><devices><device ID=\"2098\"/><device ID=\"2053\"/></devices><commands><command name=\"TestsensorTemp1\"> \
-                    <addr>0800</addr><len>2</len><unit>UT</unit><description>Ermittle die Aussentemperatur in Grad C</description><device ID=\"2053\"> \
-                    <addr>6F</addr><unit>UT1</unit><len>1</len></device></command></commands></vito>",
-    "sample_file_name": "sample_files/sensor.yaml"}
+test_CmdElements_template_good = [
+    {
+    }
+]
 
+
+
+#test_data = {(data["xml_string"], data["sample_file_name"]) for data in test_CmdElements_template_good}
+#@pytest.mark.parametrize("input_xml, output_yaml", test_data)
 def test_yaml_samples():
-    #mocke input datei mit xml_string, asserte gegen geparsten Teil von sample_file_name
+    #main(input_xml) mock den inputzugriff in main, vermutlich xml_parser.CommandElement.fetch_data sowie TreeElement.fill_from_xml
+    #assert output_yaml mit dem geschriebenen output aus template_engine.write_output_to_file()
+    
     pass
