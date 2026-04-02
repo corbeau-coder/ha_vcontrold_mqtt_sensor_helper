@@ -18,3 +18,9 @@ def test_yaml_samples(sample_yaml, tmpl_path, input_list):
     with (open(sample_yaml, "r", encoding="utf-8") as fs):
         sample = safe_load(fs)
     assert test_output == sample
+
+
+def test_yaml_write_file():
+    #exception
+    #write file, check output
+    pass

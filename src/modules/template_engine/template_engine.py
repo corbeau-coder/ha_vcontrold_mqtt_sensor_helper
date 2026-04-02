@@ -10,3 +10,6 @@ class YamlRenderer():
         env = Environment(loader=FileSystemLoader(p.parent, encoding="utf-8"))
         output_template = env.get_template(p.name)
         return output_template.render(sensor_list=list_cmdelem)
+    
+    def write_yaml_file(yaml_file: str="configuration.yaml"):
+        pass
