@@ -8,13 +8,13 @@ from yaml import safe_load
 
 
 testcases_CmdElements_template_good = [
-    ("tests/template_engine/sample_files/sensor.yaml", [CommandElement(name="TestsensorTemp1",unittype="UT",desc="Temp Sensor")]),  
+    ("tests/template_engine/sample_files/sensor.yaml", "src/modules/template_engine/templates/sensor.jinja",[CommandElement(name="TestsensorTemp1",unittype="UT",desc="Temp Sensor")]),  
 ]
 
 
-@pytest.mark.parametrize("sample_yaml, input_list", testcases_CmdElements_template_good)
-def test_yaml_samples(sample_yaml, input_list):
-    test_output = safe_load(YamlRenderer().generate_yaml(input_list))
-    with (open(sample_yaml, "r") as fs):
+@pytest.mark.parametrize("sample_yaml, tmpl_path, input_list", testcases_CmdElements_template_good)
+def test_yaml_samples(sample_yaml, tmpl_path, input_list):
+    test_output = safe_load(YamlRenderer().generate_yaml(input_list, tmpl_path))
+    with (open(sample_yaml, "r", encoding="utf-8") as fs):
         sample = safe_load(fs)
     assert test_output == sample

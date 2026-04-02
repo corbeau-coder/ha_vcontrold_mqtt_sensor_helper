@@ -1,0 +1,13 @@
+sensor:
+  {% for data in sensor_list %}
+  - name: "{{ data.name }}"
+    unique_id: "{{ data.name }}"
+    device_class: temperature
+    state_topic: "openv/{{ data.name }}"
+    unit_of_measurement: "°C"
+    value_template: |-
+      {% raw %}{{ value | round(2) }}{% endraw %}
+    device:
+      identifiers: viesscontrold
+      manufacturer: viessmann
+  {% endfor %}
